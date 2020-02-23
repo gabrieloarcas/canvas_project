@@ -1,39 +1,7 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
-//create circle
-const centerX = canvas.width / 2;
-const centerY = canvas.height / 2;
-ctx.beginPath();
-ctx.lineWidth = 5;
-ctx.strokeStyle = "white";
-ctx.arc(centerX, centerY, 70, 0, Math.PI * 2);
-ctx.stroke();
-
-//create mouth
-ctx.beginPath();
-ctx.arc(centerX, centerY, 50, 0, Math.PI);
-ctx.stroke();
-
-//create eyes
-const eye = (moveX, moveY) => {
-  ctx.beginPath();
-  ctx.arc(centerX + moveX, centerY + moveY, 5, 0, Math.PI * 2);
-  ctx.stroke();
-};
-eye(25, -30);
-eye(-25, -30);
-
-//create some frame around the smiley
-ctx.strokeRect(250, 300, 400, 300);
-
-//trying a quadratic Bézier curve
-ctx.beginPath();
-ctx.moveTo(centerX + 50, centerY);
-ctx.quadraticCurveTo(centerX, centerY + 70, centerX - 50, centerY);
-ctx.stroke();
-
-//create another circle through an object
+//create a circle through an object
 const circle = {
   x: 500 - 50,
   y: 1000,
@@ -132,16 +100,6 @@ function touchUp(e) {
   }
 }
 
-//add start inside canvas
-
-function someText() {
-  ctx.font = "30px Comic Sans MS";
-  ctx.fillStyle = "white";
-  ctx.textAlign = "center";
-  ctx.fillText("Click anywhere to start this", 300, 100);
-}
-someText();
-
 // buttons for mobile devices
 
 document.addEventListener("click", startGame);
@@ -185,3 +143,113 @@ function release() {
   circle.dx = 0;
   circle.dy = 0;
 }
+
+// Create something with a Class
+
+class Ball {
+  constructor(positionX, positionY, size, speed, dX = 0, dY = 0) {
+    this.positionX = positionX;
+    this.positionY = positionY;
+    this.dX = dX;
+    this.dY = dY;
+    this.size = size;
+    this.speed = speed;
+  }
+  create() {
+    ctx.beginPath();
+    ctx.arc(this.positionX, this.positionY, this.size, 0, Math.PI * 2);
+    ctx.stroke();
+  }
+}
+
+//Add a new feature to the existing object
+
+class ballWithColor extends Ball {
+  constructor(color, positionX, positionY, size, speed, dX, dY) {
+    super(positionX, positionY, size, speed, dX, dY);
+    this.color = color;
+  }
+
+  fillColor() {
+    ctx.fillStyle = this.color;
+    ctx.fill();
+  }
+
+  moveBall() {
+    // console.log(this.dX);
+    this.positionX += this.dX;
+  }
+}
+
+//Change dx to have different speed applied to the balls
+let ball1 = new ballWithColor("red", 100, 100, 30, 5, 1);
+let ball2 = new ballWithColor("white", 140, 100, 30, 5, 7);
+let ball3 = new ballWithColor("green", 180, 100, 30, 5, 3);
+
+//Click anywhere text
+function someText() {
+  ctx.font = "30px Comic Sans MS";
+  ctx.fillStyle = "white";
+  ctx.textAlign = "center";
+  ctx.fillText("Click anywhere to start this", 200, 400);
+}
+
+//Create three balls from the objects
+const threeBalls = () => {
+  ball1.create();
+  ball1.fillColor();
+  ball1.moveBall();
+  ball2.create();
+  ball2.fillColor();
+  ball2.moveBall();
+  ball3.create();
+  ball3.fillColor();
+  ball3.moveBall();
+};
+
+//Animate those balls
+
+function animateBalls() {
+  clear();
+  threeBalls();
+  requestAnimationFrame(animateBalls);
+  someText();
+}
+animateBalls();
+
+// Create a smiley
+
+const canvas2 = document.getElementById("canvas2");
+const ctx2 = canvas2.getContext("2d");
+
+//create circle
+const centerX = canvas2.width / 2;
+const centerY = canvas2.height / 2;
+ctx2.beginPath();
+ctx2.lineWidth = 5;
+ctx2.strokeStyle = "white";
+ctx2.arc(centerX, centerY, 70, 0, Math.PI * 2);
+ctx2.stroke();
+
+//create mouth
+ctx2.beginPath();
+ctx2.arc(centerX, centerY, 50, 0, Math.PI);
+ctx2.stroke();
+
+//create eyes
+const eye = (moveX, moveY) => {
+  ctx2.beginPath();
+  ctx2.arc(centerX + moveX, centerY + moveY, 5, 0, Math.PI * 2);
+  ctx2.stroke();
+};
+eye(25, -30);
+eye(-25, -30);
+
+//create some frame around the smiley
+ctx2.strokeRect(250, 300, 400, 300);
+
+//trying a quadratic Bézier curve
+ctx2.beginPath();
+ctx2.moveTo(centerX + 50, centerY);
+ctx2.quadraticCurveTo(centerX, centerY + 70, centerX - 50, centerY);
+ctx2.stroke();
