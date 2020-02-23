@@ -1,0 +1,45 @@
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+#canvas {
+  background: linear-gradient(
+    180deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(9, 9, 121, 1) 35%
+  );
+  margin: 0 auto;
+  padding: 0 auto;
+}
+.container {
+  width: 400px;
+  margin-top: 20px;
+  display: grid;
+  grid-gap: 5px;
+  padding: 20px;
+}
+#upButton,
+#start,
+#leftButton,
+#rightButton {
+  user-select: none;
+  touch-action: manipulation;
+  width: 150px;
+  height: 150px;
+  font-size: 40px;
+  color: grey;
+}
+#upButton {
+  grid-column-start: 2;
+  grid-column-end: 3;
+}
+#start {
+  grid-column-start: 2;
+}
+#leftButton {
+  grid-column-start: 1;
+}
+#rightButton {
+  grid-column-start: 3;
+}
